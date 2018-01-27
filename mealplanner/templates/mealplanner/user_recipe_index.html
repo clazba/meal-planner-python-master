@@ -1,0 +1,53 @@
+{% extends "mealplanner/base.html" %}
+
+{% block title %}
+{{ block.super }} - All Recipes
+{% endblock %}
+
+{% block content %}
+
+{% load fractions %}
+
+<div class="container">
+    <form id="searchform" action="{% url 'mealplanner:recipe-search' %}" method="get" accept-charset="utf-8">
+          <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Recipe Name">
+          <button class="searchbutton" type="submit">
+            <i>Search Recipes</i>
+          </button>
+    </form>
+</div>
+
+<div class="container">
+    <div>
+
+            <h2>{{ view.title }} {{ user.username }}</h2>
+
+            {% for recipe in user.recipe_set.all %}
+            <ul>
+                    <p>
+                    <li><a href="{% url 'mealplanner:recipe-detail' recipe.pk %}"><strong>{{ recipe.name }}</strong></a></li>
+                    <p>{{ recipe.text }}</p>
+                    {% for ingredient in recipe.ingredient_set.all %}
+                    <p> {{ ingredient.name }}
+                        - {% display_fraction ingredient.quantity allow_mixed_numbers=True %}
+                        {% if not ingredient.unitOfMeasure == 'NA' %}
+                        {{ ingredient.get_unitOfMeasure_display }}
+                        {% endif %}
+                        {% if not ingredient.quantity_2 == 0 %}
+                        {% display_fraction ingredient.quantity_2 allow_mixed_numbers=True %}
+                        {{ ingredient.get_unitOfMeasure_2_display }}
+                        {% endif %}
+                    </p>
+                {% endfor %}
+
+                {% if recipe.author %}
+                    <p><strong>Created by {{ recipe.author.username }}</strong></p>
+                {% endif %}
+
+                <a href="{% url 'mealplanner:recipe-update' recipe.pk %}">Edit</a> | <a href="{% url 'mealplanner:recipe-delete' recipe.pk %}">Delete</a>
+            </ul>
+            {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

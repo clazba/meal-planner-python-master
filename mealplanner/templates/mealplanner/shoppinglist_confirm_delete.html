@@ -1,0 +1,34 @@
+{% extends "mealplanner/base.html" %}
+
+{% block title %}
+{{ block.super }} - Delete {{ object.name }}?
+{% endblock %}
+
+{% block content %}
+
+{% load fractions %}
+
+<h3>Are you sure you want to delete "{{ object.name }}"?</h3>
+<p>(Created {{ object.created }})</p>
+
+    {% for recipe in object.recipes.all %}
+    <h4>For {{ recipe.name }}</h4>
+    {% for ingredient in recipe.ingredient_set.all %}
+    <p> {{ ingredient.name }}
+        - {% display_fraction ingredient.quantity allow_mixed_numbers=True %}
+        {% if not ingredient.unitOfMeasure == 'NA' %}
+        {{ ingredient.get_unitOfMeasure_display }}
+        {% endif %}
+        {% if not ingredient.quantity_2 == 0 %}
+        {% display_fraction ingredient.quantity_2 allow_mixed_numbers=True %}
+        {{ ingredient.get_unitOfMeasure_2_display }}
+        {% endif %}
+    </p>
+    {% endfor %}
+    {% endfor %}
+
+    <form action="" method="post">{% csrf_token %}
+        <input type="submit" value="Confirm Delete" />
+    </form>
+
+{% endblock %}
