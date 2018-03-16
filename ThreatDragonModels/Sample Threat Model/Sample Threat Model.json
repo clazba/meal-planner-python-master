@@ -1,0 +1,12 @@
+{
+  "summary": {
+    "title": "Sample Threat Model",
+    "owner": "Claud",
+    "description": "Sample Application to showcase benefits of TM"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [],
+    "reviewer": "CC"
+  }
+}
