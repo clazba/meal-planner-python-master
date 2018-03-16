@@ -1,0 +1,18 @@
+{
+  "summary": {
+    "title": "kk",
+    "owner": "ll",
+    "description": "jkkjkj"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "title": "ll",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0
+      }
+    ],
+    "reviewer": "ll"
+  }
+}
